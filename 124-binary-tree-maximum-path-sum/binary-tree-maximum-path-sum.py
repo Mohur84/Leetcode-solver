@@ -1,6 +1,6 @@
 class Solution(object):
     def maxPathSum(self, root):
-        self.max_sum = float('-inf')
+        self.max_sum=float('-inf')
         self.dfs(root)
         return self.max_sum
     def dfs(self, node):
