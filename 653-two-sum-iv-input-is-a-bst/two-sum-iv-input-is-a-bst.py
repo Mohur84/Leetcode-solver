@@ -7,7 +7,6 @@ class BSTIterator:
         return len(self.stack) > 0
     def next(self):
         node = self.stack.pop()
-
         if self.reverse:
             self.pushAll(node.left)
         else:
