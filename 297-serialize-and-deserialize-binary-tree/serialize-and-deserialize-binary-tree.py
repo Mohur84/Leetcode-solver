@@ -7,7 +7,6 @@ class Codec:
         q = deque([root])
         while q:
             node = q.popleft()
-
             if node is None:
                 result.append("#")
             else:
