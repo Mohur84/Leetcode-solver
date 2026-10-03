@@ -1,37 +1,18 @@
-#class Solution:
-#    def maxProduct(self, words):
-#        n=len(words)
-#        masks=[0]*n
-#        for i, word in enumerate(words):
-#            mask=0
-#            for ch in word:
-#                mask!=1<<(ord(ch)-ord('a'))
-#            masks[i]=mask
-#        answer=0
-#        for i in range(n):
-#            for j in range(i+1, n):
-#                if masks[i] & masks[j]==0:
-#                    answer=max(
-#                        answer,
-#                        len(words[i])*len(words[j])
-#                    )
-#        return answer
-
 class Solution:
     def maxProduct(self, words):
-        n = len(words)
-        masks = [0] * n
+        n=len(words)
+        masks=[0]*n
         for i, word in enumerate(words):
-            mask = 0
+            mask=0
             for ch in word:
-                mask |= 1 << (ord(ch) - ord('a'))
-            masks[i] = mask
-        answer = 0
+                mask|=1<<(ord(ch)-ord('a'))
+            masks[i]=mask
+        answer=0
         for i in range(n):
-            for j in range(i + 1, n):
-                if masks[i] & masks[j] == 0:
-                    answer = max(
+            for j in range(i+1, n):
+                if masks[i] & masks[j]==0:
+                    answer=max(
                         answer,
-                        len(words[i]) * len(words[j])
+                        len(words[i])*len(words[j])
                     )
         return answer
