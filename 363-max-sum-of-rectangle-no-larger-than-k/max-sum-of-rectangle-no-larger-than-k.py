@@ -20,7 +20,7 @@ class Solution:
                     if pos<len(sorted_prefix):
                         answer=max(
                             answer,
-                            prefix - sorted_prefix[pos]
+                            prefix-sorted_prefix[pos]
                         )
                     insort(sorted_prefix, prefix)
                     if answer==k:
