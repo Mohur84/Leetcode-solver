@@ -1,4 +1,3 @@
-import random
 class Solution:
     def __init__(self, nums):
         self.original=nums[:]
