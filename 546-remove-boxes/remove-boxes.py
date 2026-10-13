@@ -1,18 +1,13 @@
 class Solution:
     def removeBoxes(self, boxes: list[int]) -> int:
         @lru_cache(None)
-        def dp(l, r, k):
-            if l>r:
-                return 0
-            while l>r and boxes[r]==boxes[r-1]:
-                r-=1
-                k+=1
-            best=dp(l, r-1, 0)+(k+1)**2
-            for i in range(l, r):
-                if boxes[i]==boxes[r]:
-                    best=max(
-                        best,
-                        dp(l, i, k+1)+dp(i+1, r-1, 0)
-                    )
-            return best
-        return dp(0, len(boxes)-1, 0)
+        def dfs(grps: tuple) -> int:
+            if not grps: return 0
+            (colorL, lenL), grps = grps[0], grps[1:]
+            res = lenL*lenL + dfs(grps)
+            for i, (colorR, lenR) in enumerate(grps):
+                if colorL == colorR:
+                    res = max(res, dfs(grps[:i]) + dfs(((colorL, lenL+lenR),) + grps[i+1:]))
+            return res
+        box_grps = tuple((k, len(list(g))) for k,g in groupby(boxes))
+        return dfs(box_grps)
