@@ -1,28 +1,30 @@
 class Solution:
     def numMagicSquaresInside(self, grid: list[list[int]]) -> int:
-        rows, cols=len(grid), len(grid[0])
-        count=0
-        def is_magic(r:int, c:int)->bool:
-            values=[
-                grid[i][j]
-                for i in range(r, r+3)
-                for j in range(c, c+3)
+        rows = len(grid)
+        cols = len(grid[0])
+        count = 0
+        def isMagic(r, c):
+            if grid[r+1][c+1] != 5:
+                return False
+            vals = [
+                grid[r][c],   grid[r][c+1],   grid[r][c+2],
+                grid[r+1][c], grid[r+1][c+1], grid[r+1][c+2],
+                grid[r+2][c], grid[r+2][c+1], grid[r+2][c+2]
             ]
-            if set(values)!=set(range(1 ,10)):
+            if sorted(vals) != list(range(1, 10)):
                 return False
-            for i in range(r, r+3):
-                if sum(grid[i][c:c+3])!=15:
-                    return False
-            for j in range(c, c+3):
-                if sum(grid[i][j] for i in range(r, r+3))!=15:
-                    return False
-            if sum(grid[r+i][c+i] for i in range(3))!=15:
-                return False
-            if sum(grid[r+i][c+2-i] for i in range(3))!=15:
-                return False
-            return True
-        for r in range(rows-2):
-            for c in range(cols-2):
-                if is_magic(r, c):
-                    count+=1
+            return (
+                grid[r][c] + grid[r][c+1] + grid[r][c+2] == 15 and
+                grid[r+1][c] + grid[r+1][c+1] + grid[r+1][c+2] == 15 and
+                grid[r+2][c] + grid[r+2][c+1] + grid[r+2][c+2] == 15 and
+                grid[r][c] + grid[r+1][c] + grid[r+2][c] == 15 and
+                grid[r][c+1] + grid[r+1][c+1] + grid[r+2][c+1] == 15 and
+                grid[r][c+2] + grid[r+1][c+2] + grid[r+2][c+2] == 15 and
+                grid[r][c] + grid[r+1][c+1] + grid[r+2][c+2] == 15 and
+                grid[r][c+2] + grid[r+1][c+1] + grid[r+2][c] == 15
+            )
+        for r in range(rows - 2):
+            for c in range(cols - 2):
+                if isMagic(r, c):
+                    count += 1
         return count
