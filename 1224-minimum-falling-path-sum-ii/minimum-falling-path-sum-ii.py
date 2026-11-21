@@ -1,14 +1,15 @@
 class Solution:
     def minFallingPathSum(self, grid: list[list[int]]) -> int:
-        n=len(grid)
-        dp=grid[0][:]
-        for i in range(1, n):
-            new_dp=[0]*n
-            for j in range(n):
-                minimum=float('inf')
-                for k in range(n):
-                    if k!=j:
-                        minimum=min(minimum, dp[k])
-                new_dp[j]=grid[i][j]+minimum
-            dp=new_dp
-        return min(dp)
+        first_min, second_min, first_idx = 0, 0, -1
+        for row in grid:
+            curr_first, curr_second, curr_idx = float('inf'), float('inf'), -1
+            for j, val in enumerate(row):
+                curr_sum = val + (first_min if j != first_idx else second_min)
+                if curr_sum < curr_first:
+                    curr_second = curr_first
+                    curr_first = curr_sum
+                    curr_idx = j
+                elif curr_sum < curr_second:
+                    curr_second = curr_sum
+            first_min, second_min, first_idx = curr_first, curr_second, curr_idx
+        return first_min
